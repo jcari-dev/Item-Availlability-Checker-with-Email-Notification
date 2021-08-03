@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if submitted %} Your New Entry entry
+was added. {% else %}
+
+
+
+{% block javascript %}
+  <script>
+   function do_heavy_lifting(argument) {
+    $.ajax({
+        type: 'GET',
+        url: '/newquery/',
+        beforeSend: function() {
+            $('#loading').show();
+        },
+        success: function(data) {
+            
+        },
+        cache: false
+    });
+}
+  </script>
+{% endblock %}
+
+
+<div class="col-sm-9">
+    <h4><small>New Query Page</small></h4>
+    <hr>
+    <h2>What do you want to get notified about?</h2>
+    <br><br>
+    <form action="" method="POST">
+        {% csrf_token%}
+        <hr>
+        <h4>New Item Request</h4>
+
+        <br>
+        
+        <table>
+            {{ form.as_table}}
+            {{ form2.as_table}}
+        </table>
+        
+        <input type="submit" value="Send" class="btn" onclick="do_heavy_lifting('argument')">
+
+
+
+    </form>
+
+    {% endif %} 
+    
+    <img id="loading" src="https://flevix.com/wp-content/uploads/2019/12/Barline-Loading-Images-1.gif" alt="" style="display: none;">
+
+    {% endblock %}

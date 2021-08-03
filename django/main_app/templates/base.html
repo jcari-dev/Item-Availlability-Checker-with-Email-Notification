@@ -1,0 +1,115 @@
+{% load socialaccount %} {% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Is it?</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+{% if user.is_authenticated %}
+
+
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4>Is it in stock?</h4>
+
+      Logged as:  <b>{{ user.email }}</b>
+
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="{% url 'main:home' %}">Home</a></li>
+
+        <li><a href="{% url 'main:new_query' %}">New Query</a></li>
+
+        <li><a href="{% url 'main:current_queries' %}">Current Queries<span class="badge">2</span></a></li>
+       
+        <li><a href="{% url 'main:past_queries' %}">Past Queries</a></li>
+
+        <!-- <li><a href="{% url 'main:new_user' %}">Register Your Email</a></li> -->
+        
+          
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button type="submit">{% trans 'Sign Out' %}</button>
+          </form>
+          </li>
+      </ul><br>
+
+    </div>
+    {% block content %} {% endblock %}
+
+
+
+      
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% else %}
+
+<div class="container text-dark mt-5">
+        <div class="row justify-content-md-center">
+          <div class="col-md-5 bg-grey p-3">
+            <form class="form-signin">
+                <h1 class="h3 mb-3">Please sign in</h1>
+                <!-- <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+                <br>
+                <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
+                <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Sign in with Google</a>
+                <p class="mt-5 mb-3 text-muted">&copy; 2021-2021</p>
+              </form>
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+<footer class="container-fluid">
+  <p>All Rights Reserved, &copy; 2021 Admin </p>
+</footer>
+
+</body>
+</html>

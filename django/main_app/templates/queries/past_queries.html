@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-sm-9">
+    <h4><small>Current Queries Page</small></h4>
+    <hr>
+    <h2>This is a list of your current queries</h2>
+
+    <!-- {{ order_list }} -->
+
+    
+    {% for instance in order_list %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Date Placed</th>
+            <th scope="col">Active</th>
+            <th scope="col">Category</th>
+
+
+
+          </tr>
+        </thead>
+      
+        <tbody>
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{instance.product_name}}</td>
+            <td>{{instance.date}}</td>
+            <td>{{instance.active}}</td>
+            <td>{{instance.category}}</td>
+
+
+          </tr>
+        </tbody>
+      </table>
+
+    {% endfor %}
+
+    <br><br>
+
+{% endblock %}
