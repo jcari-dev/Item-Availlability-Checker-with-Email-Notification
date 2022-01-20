@@ -36,3 +36,6 @@ The users request (along with more information) and email is stored in the datab
 ## Author
 
 - Jorge Caridad
+
+## Usage
+Please do not use this on any website that you do not have the permission to scrap, since this app, will scrap the site that you try to check the item availability. 
