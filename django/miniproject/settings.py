@@ -15,10 +15,10 @@ import dj_database_url
 
 
 from pathlib import Path
-
+from dotenv import load_dotenv
 from django.shortcuts import redirect
 from django_heroku.core import settings
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,9 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--du^7(1!koa@1kzn4s(#5_u+h2akmt_38&n6ek0$2$6lb=uryh'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = (os.getenv('DEBUG', 'False') == 'True')
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://inventorycheckjc.herokuapp.com/','http://127.0.0.1:8000/']
@@ -90,7 +91,7 @@ WSGI_APPLICATION = 'miniproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'miniproject',
+        'NAME': 'miniprojectv8',
     }
 }
 
