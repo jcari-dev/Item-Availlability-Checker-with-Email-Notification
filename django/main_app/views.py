@@ -44,7 +44,11 @@ def new_query(request):
     form = OrderForm
     form2 = CategoryForm
 
-    return render(request, 'queries/new_query.html', {'form': form, 'push': push, 'form2': form2})
+    return render(request, 'queries/new_query.html', {
+        'form': form,
+        'push': push,
+        'form2': form2
+    })
 
 
 def new_user(request):
@@ -63,7 +67,6 @@ def new_user(request):
 
     form = User
 
-    
     render(request, 'queries/register_user.html', {'form': form, 'push': push})
 
 
@@ -73,10 +76,7 @@ class Current_Queries(ListView):
 
         queryset = Order.objects.filter(email=request.user.email, active=True)
         queryset2 = Product.objects.filter(user=request.user.email)
-        context = {
-            'order_list': queryset,
-            'product_list': queryset2
-        }
+        context = {'order_list': queryset, 'product_list': queryset2}
         return render(request, 'queries/current_queries.html', context)
 
     def post(self, request):
@@ -95,14 +95,16 @@ class Current_Queries(ListView):
                 push = True
 
         form = OrderForm
-        return render(request, 'queries/past_queries.html', {'form': form, 'push': push})
+        return render(request, 'queries/past_queries.html', {
+            'form': form,
+            'push': push
+        })
 
 
 class Past_Queries(ListView):
+
     def get(self, request):
         queryset = Order.objects.filter(email=request.user.email, active=False)
 
-        context = {
-            'order_list': queryset
-        }
+        context = {'order_list': queryset}
         return render(request, 'queries/past_queries.html', context)
