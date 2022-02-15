@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from .models import *
@@ -7,6 +7,9 @@ from .forms import *
 from allauth import *
 from .send_mail import *
 from .inventory_checker import *
+from threading import Thread
+import json
+
 # Create your views here.
 
 
@@ -27,10 +30,22 @@ def new_query(request):
             new = form.save(commit=False)
             new.email = request.user.email
             new.category = new2.category
+            json_response = check_p(new.url)
+            # print(json_response)
+            # json_response = json_response.json()
+            # print(json_response, '@@@@@@@@@@@@@@@@@@@@@@@@')
+            if json_response['text'] != 'Sold out':
+                return HttpResponseRedirect('/failed?push=True')
+
+            new.product_name = json_response['product_name']
             new.save()
             new2.save()
+            
+            pcheck = Thread(target=check, args=(0, new.url, new.product_name, new.email))
+            pcheck.start()
+            
             # print(new.url, new.product_name)
-            check(new.url, new.product_name, new.email)
+            
             # sendMail(request.user.email, 'New Request from "Is It in Stock?"',
             #          f'Sup, \n You currently placed a query in our app, for "{new.product_name}" from target.com. \n We are currently checking the url and the product, we will send you a confirmation email when the request gets posted. \n If that was not you contact us at contact@jorgecaridad.dev')
 
@@ -38,6 +53,7 @@ def new_query(request):
     else:
         form = OrderForm()
         form2 = CategoryForm()
+        
         if 'push' in request.GET:
             push = True
 
@@ -108,3 +124,26 @@ class Past_Queries(ListView):
 
         context = {'order_list': queryset}
         return render(request, 'queries/past_queries.html', context)
+    
+def faq(request):
+    
+
+    return render(request, 'faq.html')
+
+def failed(request):
+    
+    return render(request, 'queries/failed.html')
+
+def deactivate_query(request, pk):
+    
+    query = Order.objects.get(id=pk)
+    print(pk, query)
+    if request.method == "POST":
+        query.active = False
+        query.save()
+        return redirect('/pastqueries')
+    
+    context = {'query':query}
+    
+    return render(request, 'queries/deactivate.html', context)
+        

@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Is it?</title>
+  <title>Is It In Stock: Is it?</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="https://clipart.world/wp-content/uploads/2020/08/Thinking-Emoji-transparent-clipart-2.png" type="image/x-icon">
+  <link rel="icon" href="https://clipart.world/wp-content/uploads/2020/08/Thinking-Emoji-transparent-clipart-2.png" type="image/x-icon">
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -27,18 +27,114 @@
       color: white;
       padding: 15px;
     }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height: auto;} 
-    }
+
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+body {
+  /* background: #76b852; /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F); */
+  font-family: "Roboto", sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+    ul,li { list-style-type: none;
+        list-style-position:inside;
+        margin:0;
+        padding:0; }
 
     footer {
-      position: absolute;
+      position: fixed;
   bottom: 0;
   width: 100%;
   
@@ -54,32 +150,33 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav">
-      <h4>Is it in stock?</h4>
+      <h4>Is It In Stock?</h4>
+      <br>
 
-      Logged as:  <b>{{ user.email }}</b>
+      Logged as:  <b style = "text-transform:capitalize;" >{{user}}</b> (<b>{{user.email}}</b>)
 
       <ul class="nav nav-pills nav-stacked">
+        <br>
         <li><a href="{% url 'main:home' %}">Home</a></li>
 
         <li><a href="{% url 'main:new_query' %}">New Query</a></li>
 
-        <li><a href="{% url 'main:current_queries' %}">Current Queries<span class="badge">2</span></a></li>
+        <li><a href="{% url 'main:current_queries' %}">Current Queries</a></li>
        
         <li><a href="{% url 'main:past_queries' %}">Past Queries</a></li>
+        <li><a href="{% url 'main:faq' %}">FAQ</a></li>
 
-        <!-- <li><a href="{% url 'main:new_user' %}">Register Your Email</a></li> -->
-        
           
-          <form method="post" action="{% url 'account_logout' %}">
-            {% csrf_token %}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-            {% endif %}
-            <button type="submit">{% trans 'Sign Out' %}</button>
-          </form>
-          </li>
+ 
       </ul><br>
-
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button style="margin-top: 100px" type="submit">{% trans 'Sign Out' %}</button>
+      </form>
+      </li>
     </div>
     {% block content %} {% endblock %}
 
@@ -95,27 +192,38 @@
 
 {% else %}
 
-<div class="container text-dark mt-5">
+<!-- <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
           <div class="col-md-5 bg-grey p-3">
             <form class="form-signin">
-                <h1 class="h3 mb-3">Please sign in</h1>
-                <!-- <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+                <h1 class="h3 mb-3">Login is required to utilize this app, please Sign in.</h1>
                 <br>
-                <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
                 <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Sign in with Google</a>
                 <p class="mt-5 mb-3 text-muted">&copy; 2021-2021</p>
               </form>
           </div>
         </div>
-      </div>
+      </div> -->
+   
+      <div class="login-page">
+        <h1 class="text-center">Login is required.</h1>
+        <div class="form">
+          <form class="login-form">
+            <input type="text" placeholder="username"/>
+            <input type="password" placeholder="password"/>
+            <button>login</button>
+            <p class="message">Not registered? <a href="#">Sign in with Google.</a></p>
+            <br>
+            <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Sign in with Google</a>
+
+          </form>
+        </div>
+      </div>     
+
 {% endif %}
 
 <footer class="container-fluid">
-  <p>All Rights Reserved, &copy; 2021 Admin </p>
+  <p>All Rights Reserved, &copy; 2022 Jorge Caridad </p>
 </footer>
 
 </body>

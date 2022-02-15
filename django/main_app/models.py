@@ -3,24 +3,14 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import *
 
-# Create your models here.
-
-
-# class User(models.Model):
-    
-#     name = models.CharField(max_length=20)
-    
-#     email = models.EmailField(max_length=254)
-
-#     def __str__(self):
-#         return self.email
 
 
 class Order(models.Model):
     
-    product_name = models.CharField(max_length=30)
+    product_name = models.CharField(max_length=300)
     url = models.URLField(max_length=800)
     email = models.EmailField()
+    query_name = models.CharField(max_length=30)
     # email = models.ForeignKey(
     #     User, on_delete=models.CASCADE, related_name='order')
     date = models.DateField(default=date.today)

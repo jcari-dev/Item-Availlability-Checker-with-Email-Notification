@@ -6,12 +6,13 @@ from .models import *
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ('product_name', 'url' )
+        fields = ('query_name', 'url' )
 
 class CategoryForm(ModelForm):
     class Meta:
         model = Product
         fields = ('category',)
+        
 
 # class FilteredForm(ModelForm):
 #     class Meta:

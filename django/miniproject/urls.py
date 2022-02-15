@@ -22,7 +22,4 @@ urlpatterns = [
     path('', include('main_app.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls'))
-    # path('newquery/', include('main_app.urls')),
-    # path('currentqueries/', include('main_app.urls')),
-    # path('pastqueries/', include('main_app.urls')),
 ]

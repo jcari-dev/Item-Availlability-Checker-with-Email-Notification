@@ -10,5 +10,8 @@ urlpatterns = [
     path('currentqueries/', views.Current_Queries.as_view(), name="current_queries"),
     path('pastqueries/', views.Past_Queries.as_view(), name="past_queries" ),
     path('registeruser/', views.new_user, name="new_user" ),
+    path('faq/', views.faq, name="faq"),
+    path('failed/', views.failed, name="failed"),
+    path('deactivate/<str:pk>/', views.deactivate_query, name="deactivate_query")
 
 ]
