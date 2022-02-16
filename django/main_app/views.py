@@ -8,6 +8,7 @@ from allauth import *
 from .send_mail import *
 from .inventory_checker import *
 from threading import Thread
+import time
 import json
 
 # Create your views here.
@@ -30,10 +31,14 @@ def new_query(request):
             new = form.save(commit=False)
             new.email = request.user.email
             new.category = new2.category
+            
+            if not clean_url(new.url):
+                 return HttpResponseRedirect('/failed?push=True')
+            
             json_response = check_p(new.url)
-            # print(json_response)
-            # json_response = json_response.json()
-            # print(json_response, '@@@@@@@@@@@@@@@@@@@@@@@@')
+            # print(json_response, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            # time.sleep(2)
+            
             if json_response['text'] != 'Sold out':
                 return HttpResponseRedirect('/failed?push=True')
 
@@ -44,11 +49,6 @@ def new_query(request):
             pcheck = Thread(target=check, args=(0, new.url, new.product_name, new.email))
             pcheck.start()
             
-            # print(new.url, new.product_name)
-            
-            # sendMail(request.user.email, 'New Request from "Is It in Stock?"',
-            #          f'Sup, \n You currently placed a query in our app, for "{new.product_name}" from target.com. \n We are currently checking the url and the product, we will send you a confirmation email when the request gets posted. \n If that was not you contact us at contact@jorgecaridad.dev')
-
             return HttpResponseRedirect('/currentqueries?push=True')
     else:
         form = OrderForm()
